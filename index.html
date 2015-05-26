@@ -1,0 +1,56 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>Point processes in JS</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="apple-touch-icon" href="apple-touch-icon.png">
+		<!-- Place favicon.ico in the root directory -->
+
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/vendor/d3.js"></script>
+	</head>
+	<body>
+		<h1>Point processes in JS</h1>
+		<script type="text/javascript">
+			"use strict";
+			var MAX_POINTS;
+			var allXs, allYs, allTs;
+			var xs, ys, ts;
+			var birth_prt = 0;
+			var death_prt = 0;
+			var simTimer;
+			var lastUpdateTime = Date.now()/1000;
+			var immigrationRate = 0.1;
+			
+			MAX_POINTS = 1024;
+			allXs = new Float32Array(MAX_POINTS);
+			allYs = new Float32Array(MAX_POINTS);
+			allTs = new Float32Array(MAX_POINTS);
+			
+			function poissonRVlite(mu, n) {
+				/* quick and dirty fake Poisson,
+				using binomial approximation. */
+				var n, p, rv;
+				//choose a nice n if none supplied
+				n = typeof n !== 'undefined' ? n : Math.max(
+					Math.ceil(mu*2), 5);
+				p = mu/n;
+				rv = 0;
+				for (var i = 0; i < n; i++) {
+					rv += Number(Math.random() < p)
+				}
+				return rv
+			}
+			function updatePoints() {
+				thisUpdateTime = Date.now()/1000;
+				timeDelta = thisUpdateTime - lastUpdateTime;
+				
+				lastUpdateTime = thisUpdateTime;
+			}
+		</script>
+	</body>
+</html>
