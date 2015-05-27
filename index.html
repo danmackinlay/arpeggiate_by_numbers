@@ -33,19 +33,18 @@
 			allYs = new Float32Array(MAX_POINTS);
 			allTs = new Float32Array(MAX_POINTS);
 			
-			function poissonRVlite(mu, n) {
+			function poissonRVlite(mu) {
 				/* quick and dirty fake Poisson,
-				using binomial approximation. */
-				var n, p, rv;
-				//choose a nice n if none supplied
-				n = typeof n !== 'undefined' ? n : Math.max(
-					Math.ceil(mu*2), 5);
-				p = mu/n;
-				rv = 0;
-				for (var i = 0; i < n; i++) {
-					rv += Number(Math.random() < p)
+				using exp sum. 
+				http://www.johndcook.com/blog/2010/06/14/generating-poisson-random-values/ 
+				*/
+				var k, M, p;
+				M = Math.exp(-mu);
+				p = 1;
+				for (k = 0; p > M; k++) {
+					p *= Math.random()
 				}
-				return rv
+				return k - 1;
 			}
 			function updatePoints() {
 				var mu, nImmigrants, thisUpdateTime, timeDelta;
