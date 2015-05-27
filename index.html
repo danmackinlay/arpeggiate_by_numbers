@@ -11,7 +11,9 @@
 		<!-- Place favicon.ico in the root directory -->
 
 		<link rel="stylesheet" href="css/main.css">
-		<script src="js/vendor/d3.js"></script>
+		<script src="./scripts/vendor/d3.js"></script>
+		<script src="./scripts/vendor/dat.gui.js"></script>
+		<script src="./scripts/vendor/lodash.js"></script>
 	</head>
 	<body>
 		<h1>Point processes in JS</h1>
@@ -46,8 +48,10 @@
 				return rv
 			}
 			function updatePoints() {
+				var mu, nImmigrants, thisUpdateTime, timeDelta;
 				thisUpdateTime = Date.now()/1000;
 				timeDelta = thisUpdateTime - lastUpdateTime;
+				mu = immigrationRate * timeDelta;
 				
 				lastUpdateTime = thisUpdateTime;
 			}
