@@ -22,11 +22,17 @@
 			var MAX_POINTS;
 			var allXs, allYs, allTs;
 			var xs, ys, ts;
-			var birth_prt = 0;
-			var death_prt = 0;
+			var deathPtr = 0;
+			var birthPtr = 0;
 			var simTimer;
-			var lastUpdateTime = Date.now()/1000;
-			var immigrationRate = 0.1;
+			var lastTime = Date.now()/1000; //seconds, for sanity
+			var immigrationRate = 2.0;
+			var maxX = 1;
+			var maxY = 1;
+			var stepCtr = 0;
+			var stepperHandle;
+			var stepperMinInterval = 150; //ms, for JS compatibility
+			var stepping = false;
 			
 			MAX_POINTS = 1024;
 			allXs = new Float32Array(MAX_POINTS);
@@ -36,7 +42,8 @@
 			function poissonRVlite(mu) {
 				/* quick and dirty fake Poisson,
 				using exp sum. 
-				http://www.johndcook.com/blog/2010/06/14/generating-poisson-random-values/ 
+				http://www.johndcook.com/blog/2010/06/14/generating-poisson-random-values/
+				Keep mu small and it will be ok.
 				*/
 				var k, M, p;
 				M = Math.exp(-mu);
@@ -45,15 +52,37 @@
 					p *= Math.random()
 				}
 				return k - 1;
+			};
+			function updatePoints(thisTime) {
+				var nImmigrants, timeDelta;
+				stepCtr += 1;
+				timeDelta = thisTime - lastTime;
+				console.debug(stepCtr, timeDelta, immigrationRate * timeDelta);
+				nImmigrants = poissonRVlite(immigrationRate * timeDelta);
+				for (var i = 0; i < nImmigrants; i++) {
+					var newX, newY;
+					birthPtr = birthPtr + 1 % MAX_POINTS;
+					newX = Math.random() * maxX;
+					newY = Math.random() * maxY;
+					allXs[birthPtr] = newX;
+					allYs[birthPtr] = newY;
+					allTs[birthPtr] = lastTime;
+				}
+				lastTime = thisTime;
 			}
-			function updatePoints() {
-				var mu, nImmigrants, thisUpdateTime, timeDelta;
-				thisUpdateTime = Date.now()/1000;
-				timeDelta = thisUpdateTime - lastUpdateTime;
-				mu = immigrationRate * timeDelta;
-				
-				lastUpdateTime = thisUpdateTime;
+			function stepAndSchedule() {
+				var ret = updatePoints(Date.now()/1000);
+				stepperHandle = window.setTimeout(
+					stepAndSchedule, stepperMinInterval
+				);
 			}
+			function start() {
+				stepAndSchedule();
+			}
+			function stop() {
+				window.clearTimeout(stepperHandle);
+			}
+			start();
 		</script>
 	</body>
 </html>
