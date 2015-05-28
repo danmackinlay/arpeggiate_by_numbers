@@ -20,15 +20,18 @@
 		<script type="text/javascript">
 			"use strict";
 			var MAX_POINTS;
-			var allXs, allYs, allTs;
+			var allXs, allYs, allTs, allParents;
 			var xs, ys, ts;
 			var deathPtr = 0;
 			var birthPtr = 0;
 			var simTimer;
-			var lastTime = Date.now()/1000; //seconds, for sanity
+			var lastTime = performance.now()/1000; //seconds, for sanity
 			var immigrationRate = 2.0;
-			var maxX = 1;
-			var maxY = 1;
+			var maxX = 100;
+			var maxY = 100;
+			var timeScale = 5;
+			var maxAge = 2;
+			var spaceScale = 10;
 			var stepCtr = 0;
 			var stepperHandle;
 			var stepperMinInterval = 150; //ms, for JS compatibility
@@ -38,6 +41,14 @@
 			allXs = new Float32Array(MAX_POINTS);
 			allYs = new Float32Array(MAX_POINTS);
 			allTs = new Float32Array(MAX_POINTS);
+			allParents = new Int32Array(MAX_POINTS);
+			
+			for (var i = 0; i < MAX_POINTS; i++) {
+				allXs[i] = -1;
+				allYs[i] = -1;
+				allTs[i] = -1;
+				allParents[i] = -1;
+			}
 			
 			function poissonRVlite(mu) {
 				/* quick and dirty fake Poisson,
@@ -54,35 +65,77 @@
 				return k - 1;
 			};
 			function updatePoints(thisTime) {
-				var nImmigrants, timeDelta;
+				var nImmigrants, timeDelta, oldestTime;
+				if (typeof thisTime === "undefined") thisTime = performance.now()/1000
+				
 				stepCtr += 1;
 				timeDelta = thisTime - lastTime;
-				console.debug(stepCtr, timeDelta, immigrationRate * timeDelta);
+				oldestTime = thisTime - maxAge * timeScale;
 				nImmigrants = poissonRVlite(immigrationRate * timeDelta);
 				for (var i = 0; i < nImmigrants; i++) {
 					var newX, newY;
-					birthPtr = birthPtr + 1 % MAX_POINTS;
 					newX = Math.random() * maxX;
 					newY = Math.random() * maxY;
 					allXs[birthPtr] = newX;
 					allYs[birthPtr] = newY;
-					allTs[birthPtr] = lastTime;
-				}
+					allTs[birthPtr] = thisTime;
+					console.debug("birthPtr", birthPtr, allTs[birthPtr])
+					birthPtr = birthPtr + 1 % MAX_POINTS;
+				};
+				// console.debug(
+				// 	"deathPtr", deathPtr,
+				// 	allTs[deathPtr], ">", oldestTime,
+				// 	allTs[deathPtr] - oldestTime)
+				for (var i=-1; i<MAX_POINTS;i++) {
+					var nextDeathPtr = (deathPtr+1)%MAX_POINTS;
+					var nextPointTime = allTs[nextDeathPtr];
+					if ((nextPointTime==-1) ||
+							(nextPointTime>oldestTime)) {
+						break;
+					} else {
+						deathPtr = nextDeathPtr;
+						console.debug(
+							"==>deathPtr", deathPtr,
+							nextPointTime, "<", oldestTime)
+					}
+				};
 				lastTime = thisTime;
-			}
+			};
+			function getPoints(thisTime) {
+				var currXs, currYs, currAges;
+				var nPoints = (MAX_POINTS + birthPtr - deathPtr) % MAX_POINTS;
+				//can I do this with views over pre alloced arrays?
+				currXs = new Float32Array(nPoints);
+				currYs = new Float32Array(nPoints);
+				currAges = new Float32Array(nPoints);
+				
+				if (typeof thisTime === "undefined") thisTime = performance.now()/1000
+				for (var j = 0; j < nPoints; j++) {
+					var i = (j + deathPtr) % MAX_POINTS;
+					currXs[j] = allXs[i];
+					currYs[j] = allYs[i];
+					currAges[j] = thisTime - allTs[i]
+				};
+				return {
+					x: currXs,
+					y: currYs,
+					age: currAges,
+				};
+			};
+			
 			function stepAndSchedule() {
-				var ret = updatePoints(Date.now()/1000);
+				var ret = updatePoints();
 				stepperHandle = window.setTimeout(
 					stepAndSchedule, stepperMinInterval
 				);
-			}
-			function start() {
+			};
+			function startSim() {
 				stepAndSchedule();
-			}
-			function stop() {
+			};
+			function stopSim() {
 				window.clearTimeout(stepperHandle);
-			}
-			start();
+			};
+			startSim();
 		</script>
 	</body>
 </html>
