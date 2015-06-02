@@ -10,17 +10,8 @@ What we are looking for are PhD candidates for the following two areas:
 
 Your time slot for the presentation / interview is: Thursday 4 June 2105, 11:30 – 12:00. Participants from our side are Prof. Gerhard Schmitt, Dr. Reinhard König (Chair of Information Architecture ETH Zurich), Dr. Bernhard Klein (Future Cities Laboratory Singapore) and approx. four team members from our research team in Zurich. 
 
-# Myself
 
-Education
-
-* BSc Mathematics from Australian National University
-* BA Human Geography from Australian National University (Honours 1st class)
-* MSc Statistics from ETHZ 
-
-For the purposes of the current discussion, this means that I know waht meterial sotcks and flows analysis is, can derive maximum likelihood estimators, explain exergy, and do various spatial statistics.
-
-Employment
+## Employment
 
 * Research
 * Music
@@ -30,20 +21,9 @@ Employment
 * Software development
 
   * Notably for online visualization of geographic data for the AboutNSW project
-  * and for brader interaction design projects such as the Dubtable.
+  * and for broader interaction design projects such as the Dubtable.
 
 <iframe src="https://player.vimeo.com/video/22110433?byline=0&portrait=0" width="600" height="337" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-Research interests
-
-* Sustainability
-* Generative design
-* Sparse regression
-* Stochastic models of point processes
-* stochastic models of recursive systems (trees, formal languages)
-* Statistics of inhomgeneous systems
-* Cross-disciplinary teamwork
-* Applying any of these tools to real-world problems
 
 
 Present my research
