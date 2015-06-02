@@ -32,6 +32,11 @@ $linkColor: #00008B;
 $linkColorHover: lighten( $linkColor, 20% );
 $selectionBackgroundColor: rgba(0, 0, 0, 0.99);
 $imageBorderWidth: 0;
+$imageShadowWidth: 0;
+
+.reveal dd {
+	margin-bottom: 0.7em;
+}
 
 // Theme template ------------------------------
 @import "../template/theme";
