@@ -28,6 +28,14 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+		<script type="text/javascript">
+		(function() {
+			var loc = window.location;
+			var pathname = loc.pathname;
+			var basepathname = pathname.slice(0, pathname.lastIndexOf("/")+1);
+			window.baseUrl = loc.protocol + "//" + loc.host + basepathname;
+		})();
+	</script>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -78,23 +86,20 @@
 						<p>Majro result: That in social media one can separate background influence and social contagion, and moreover that one must.</p>
 				</section>
 				<section>
-					<h2 id="employment">Employment</h2>
+					<h2 id="employment">Non-academic employment</h2>
 
 					<ul>
-						<li>Research</li>
-						<li><p>Music</p>
+						<li><p>Musician/Performer</p>
+						<li><p>Software development</p>
 
-							<p>Mostly in Indonesia, where I will in fact be working once again over summer this year.</p></li>
-							<li><p>Software development</p>
-
-								<ul>
-									<li>Notably for online visualization of geographic data for the AboutNSW project</li>
-									<li>and for broader interaction design projects such as the Dubtable.</li>
-								</ul>
+							<ul>
+								<li>Notably for online visualization of geographic data for the AboutNSW project</li>
+								<li>and for broader interaction design projects such as the Dubtable. (Collaboration with <a href="https://james-nichols.github.io/">Dr James Nichols</a>, UNSW)</li>
+							</ul>
 						</li>
 					</ul>
 
-					<iframe src="https://player.vimeo.com/video/22110433?byline=0&portrait=0" width="600" height="337" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+					<iframe data-src="https://player.vimeo.com/video/22110433?byline=0&portrait=0" width="600" height="337" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 				</section>
 				<section>
 					<p>Cluster representation.</p>
@@ -482,7 +487,13 @@ Reveal.addEventListener( 'customevent', function() {
 				center: true,
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
-
+				math: {
+					mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_HTMLorMML-full'
+ 					//config: 'TeX-AMS_HTML-full'
+					// See http://docs.mathjax.org/en/latest/config-files.html
+				},
+				
 				// Optional reveal.js plugins
 				dependencies: [
 					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -490,7 +501,8 @@ Reveal.addEventListener( 'customevent', function() {
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math/math.js', async: true }
 				]
 			});
 
