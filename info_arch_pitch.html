@@ -29,13 +29,13 @@
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
 		<script type="text/javascript">
-		(function() {
-			var loc = window.location;
-			var pathname = loc.pathname;
-			var basepathname = pathname.slice(0, pathname.lastIndexOf("/")+1);
-			window.baseUrl = loc.protocol + "//" + loc.host + basepathname;
-		})();
-	</script>
+			(function() {
+				var loc = window.location;
+				var pathname = loc.pathname;
+				var basepathname = pathname.slice(0, pathname.lastIndexOf("/")+1);
+				window.baseUrl = loc.protocol + "//" + loc.host + basepathname;
+			})();
+		</script>
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -488,14 +488,20 @@ Reveal.addEventListener( 'customevent', function() {
 
 				transition: 'slide', // none/fade/slide/convex/concave/zoom
 				math: {
-					mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
-					config: 'TeX-AMS_HTMLorMML-full'
- 					//config: 'TeX-AMS_HTML-full'
+					//mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					mathjax: 'http://localhost/media/mathjax/MathJax.js',
+					// config: 'TeX-MML-AM_HTMLorMML-full'
+ 					config: 'TeX-AMS_HTML-full'
 					// See http://docs.mathjax.org/en/latest/config-files.html
 				},
-				
+				// leap: {
+				// 		naturalSwipe:	false,	// Invert swipe gestures
+				// 		pointerOpacity:	0.5,	  // Set pointer opacity to 0.5
+				// 		pointerColor:	'#d80000' // Red pointer
+				// },
 				// Optional reveal.js plugins
 				dependencies: [
+					// { src: 'plugin/leap/leap.js', async: true },
 					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
 					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
