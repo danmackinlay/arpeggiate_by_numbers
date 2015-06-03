@@ -47,9 +47,9 @@
 
 			<div class="slides">
 				<section>
-					<h1>Spatial stochastic processes in urbanism</h1>
+					<h1>Stochastics &amp; urbanism</h1>
 					<h2>Why it's a great time to have statisticians on staff</h2>
-					<h2>This one in particular</h2>
+					<h2 class="fragment">This one in particular</h2>
 					
 				</section>
 				<section>
@@ -92,15 +92,16 @@
 						<li>Sparse regression</li>
 						<li>Stochastic models of point processes</li>
 						<li>Stochastic models of recursive systems (trees, formal languages)</li>
-						<li>Statistics of inhomgeneous systems</li>
+						<li>Statistics of inhomogeneous systems</li>
 						<li>Cross-disciplinary teamwork</li>
 						<li>Applying any of these tools to real-world problems</li>
+						<li>More at <a href="http://notes.livingthing.org/">http://livingthing.org/</a></li>
 					</ul>
 				</section>
 				<section>
-					<h2>My master's research</h2>
-					<p>Self exciting process inference</p>
-					<p>Major result: That in social media one can separate background influence and social contagion, and moreover that one must.</p>
+					<h2>Master's research</h2>
+					<p>Self-exciting process inference.</p>
+					<p>In social media one can and must separate background influence and social contagion.</p>
 					<img src="../media/spike_recovery_aicc.svg" width="500" alt="Spike recovery">
 				</section>
 				<section>
@@ -111,13 +112,13 @@
 							Represent a way to understand endogenous effects in social, biological and geophysical systems
 						</p>
 						<p>
-							(Crime, terrorism, social media impact, disease, eathquakes)
+							(Crime, terrorism, social media impact, disease, earthquakes)
 						</p>
 					</section>
 					<section>
 						<h2>Example</h2>
 						<p>
-							Crime modelling
+							Crime modeling
 						</p>
 							<img src="../media/camden_burglary_eta.png" width="300" height="262" alt="Camden Burglary Eta">
 							<img src="../media/camden_burglary_mu.png" width="300" height="262" alt="Camden Burglary Mu">
@@ -128,9 +129,10 @@
 						</small><p>
 					</section>
 					<section>
+						<h2>Hawkes process crash course</h2>
 						<p>
-							We consider the univariate case.
-							Consider a counting process $N(t)$ such taht $$N(t_j)-N(t_i) \sim \textrm{Pois}\left((t_j-t_i)\lambda\right)$$
+							We consider the univariate case of a generic point process.
+							Take a counting process $N(t)$ such that $$N(t_j)-N(t_i) \sim \textrm{Pois}\left((t_j-t_i)\lambda\right)$$
 						</p>
 					</section>
 					<section>
@@ -141,34 +143,69 @@
 					</section>
 					<section>
 						<p>
-							This process has an associated conditional intensity:
+							The Hawkes process in particular has an associated conditional intensity:
 							\begin{align*}
 							\lambda(t|\mathcal{F}^-_{(-\infty,t)}) &= \mu + \eta\phi_\theta * N\\
 							&= \mu  + \eta\int_{-\infty}^{\infty}\phi_\theta(t-s)dN(s)\\
 							&= \mu + \eta\int_{-\infty}^{t}\phi_\theta(t-s)dN(s)\\
 							&= \mu + \eta\sum_{t_i\lt t}\phi_\theta(t-t_i)
 							\end{align*}
+							(Hawkes, 1971)
+						</p>
+					</section>
+					<section>
+						<p>
+							The Maximum Likelihood estimator of this mode's parameters this has a simple form:
+							\begin{align*}
+							L_\theta(t_{1:N}) &:= -\int_0^T\lambda^*_\theta(t)dt + \int_0^T\log \lambda^*_\theta(t) dN_t\\
+							&= -\int_0^T\lambda^*_\theta(t)dt + \sum_{t_j \leq t_i} \log \lambda^*_\theta(t_j)
+							\end{align*}
+							$$\hat{\theta}(t_{1:N}) = \operatorname{argmax}_\theta L_\theta(t_{1:N})$$
+							(Ozaki, 1979.)
 						</p>
 					</section>
 				</section>
 				<section>
-					<h2>Crowd-sourcing data</h2>
-<img src="../media/flood_control_room_1.jpg" width="615" height="500" alt="Flood Control Room 1">
-					<p><small>Images courtesy <a href="http://info.petajakarta.org/research-overview/">PetaJakarta</a></small></p>
+					<section>
+						<p>
+							Question: Why was this video of Valentin Elizalde so popular?
+						</p>
+						<p><img src="../media/Elizalde.png" width="621" height="468" alt="Valentin Elizalde, Volvere a amar"></p>
+					</section>
+					<section>
+						<p>
+							My answer: Showing that we can estimate not just the parameters, but also the background, on noisy, inconstant social data.
+						</p>
+						<p><a href="https://www.youtube.com/watch?v=ZD5ejMPbwKI"><img src="../media/inhom_fit_elizalde.svg"  height="468" alt="Background activity on Valentin Elizalde video"></a></p>
+					</section>
 				</section>
 				<section>
-					<h2>Self exciting processes <em>are</em> branching (i.e. syntactic) processs...</h2>
+					<section>
+						<h2>Application to crowd-sourcing</h2>
+						<img src="../media/flood_control_room_1.jpg" width="615" height="500" alt="Flood Control Room 1">
+						<p>Fashionable idea in, e.g. Jakarta flood management</p>
+						<p><small>Images courtesy <a href="http://info.petajakarta.org/research-overview/">PetaJakarta</a></small></p>
+					</section>
+					<section>
+						<img src="../media/tweet_flood_2.png" width="714" height="394" alt="Tweet flood">						
+						<p><small>Images courtesy <a href="http://info.petajakarta.org/research-overview/">PetaJakarta</a></small></p>
+					</section>
 				</section>
 				<section>
-					<h2>....but faster to infer.</h2>
+					<p>Self exciting processes <em>are</em> branching (i.e. syntactic) process...</p>
+					<p><img src="../media/branching_arc.svg" width="482" height="400" alt="Design grammars"></p>
+					</p>
+				</section>
+				<section>
+					<p>....but faster to infer.</p>
 					<p><img src="../media/centric-jkt-sm.svg" width="458" height="400" alt="Design grammars"></p>
 						<p><small>Design by <a href="http://contextfreeart.org/gallery/search.php?by=efi">efi</a></small></p>
 					</p>
 				</section>
 				<section>
-					<h2>An &#8220;alternative way&#8221; in procedural design</h2>
+					<h2>An &#8220;alternative way&#8221; in procedural design ruleset inference</h2>
 					<dl>
-						<dt>Evolutionary models</dt><dd>General, transparent, but difficult to infer.</dd>
+						<dt>Evolutionary grammar induction</dt><dd>General, transparent, but difficult to infer.</dd>
 						<dt>Generative neural networks</dt><dd>General, opaque, and still somewhat difficult to infer.</dd>
 						<dt>Random field models</dt><dd>Surprisingly general given their simplicity, transparent, fast to infer.</dd>
 						<dt>...</dt>
