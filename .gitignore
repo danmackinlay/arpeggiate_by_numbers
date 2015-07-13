@@ -1,12 +1,9 @@
+###################
+# Python
+###################
 
 *.py[cod]
 .ipynb_checkpoints
-
-# R nonsense
-*.Rdata
-.Rhistory
-*.csv
-*.json
 
 # data files
 *.h5
