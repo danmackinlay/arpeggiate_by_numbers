@@ -5,6 +5,7 @@ import random
 random.seed(12345)
 
 #when calculating onset statistics, aggregate notes this close together
+# (currently ignored by music21)
 ONSET_TOLERANCE = 0.06
 
 MIDI_BASE_DIR = os.path.expanduser('~/Music/midi/rag/')
